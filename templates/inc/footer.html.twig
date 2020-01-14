@@ -1,0 +1,93 @@
+<footer class="site-footer" role="contentinfo">
+    {{ page.footer_first }}
+	  {{ page.footer_second }}
+    <div class="container">
+          	{{ page.footer_third }}
+    	<div class="row">
+    	  <div class="col-sm-12"><hr class="text-light mt-2 mb-4"></div>
+    		<div class="col-md-7  pb-4 mb-4">
+    			<!-- Payment Methods-->
+    			<div class="margin-bottom-1x" style="max-width: 615px;">
+    				<img src="{{base_path}}{{directory}}/img/payment_methods.png" alt="Payment Methods" class="img-fluid">
+              </div>
+    		</div>      	
+            {{ page.footer_fourth }}
+        </div>
+    </div>
+    <div class="site-footer-end">
+    	<div class="container">
+    		<div clas="row">
+        	<div class="col-sm-12">
+        		<section class="footer-copyright">{{ page.footer }}</section>
+        	</div>
+        </div>
+    	</div>
+    </div>
+      
+</footer>
+{% if logged_in == false %}
+<div class="modal" tabindex="-1" role="dialog" id="inscriptionLogin">
+                      <div class="modal-dialog modal-side modal-top-right " role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Vous devez être connecté pour ajouter une annonce</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            {{ page.form_connection }}
+                            <h2 class="block-title">Vous n'avez pas de compte ? </h2>
+                              <div class="d-flex justify-content-center text-center mb-2 loginrx ">
+                                <div><i class="fas fa-pen"></i></div>
+                                <div><a href="/user/register">Créer votre compte</a></div>
+                              </div>
+                              {#
+                              <div class="d-flex justify-content-center text-center mb-2 loginrx facebook">
+                                <div><i class="fab fa-facebook-f"></i></div>
+                                <div><a href="#" class="rxconnexion facebook register">S'inscrire avec Facebook</a></div>
+                              </div>
+                              <div class="d-flex justify-content-center text-center mb-2 loginrx google">
+                                <div><i class="fab fa-google"></i></div>
+                                <div><a href="#" class="rxconnexion google register">S'inscrire avec Google</a></div>
+                              </div>
+                              #}
+                          </div>
+                          <div class="modal-footer d-none">
+                            
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+</div>
+{% endif %}
+<a class="scroll-to-top-btn visible" href="shop-single.html#"><i class="icon-arrow-up"></i></a>
+{#
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/5d540912eb1a6b0be6077ffe/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+        </script>
+        <!--End of Tawk.to Script-->
+#}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

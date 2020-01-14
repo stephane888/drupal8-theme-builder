@@ -1,0 +1,20 @@
+langcode: fr
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - theme_builder
+
+id: theme_builder_breadcrumbs
+theme: theme_builder
+region: header
+weight: -5
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: 'Fils d''ariane'
+  provider: system
+  label_display: '0'
+visibility: {  }

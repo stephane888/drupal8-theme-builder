@@ -1,0 +1,51 @@
+/* mixinfor mbootstrap no free */
+/* customise input file */
+/* transition */
+html.not_login {
+  height: 100%; }
+  html.not_login body, html.not_login .dialog-off-canvas-main-canvas {
+    height: 100%; }
+  html.not_login .overlay-bg {
+    position: fixed;
+    background: rgba(27, 27, 27, 0.56);
+    width: 100%;
+    height: 100%;
+    z-index: 1; }
+  html.not_login .blockuser {
+    max-width: 500px !important;
+    background-color: #474747;
+    position: relative;
+    z-index: 500; }
+  html.not_login a, html.not_login .page-header, html.not_login p {
+    color: #878787; }
+  html.not_login .page-header {
+    font-size: 1.2em; }
+  html.not_login .usermene_tab {
+    list-style: none;
+    padding: 0; }
+    html.not_login .usermene_tab .active {
+      display: none; }
+    html.not_login .usermene_tab .nav-link {
+      padding-left: 0; }
+    html.not_login .usermene_tab .nav-item:last-child {
+      padding-right: 0; }
+  html.not_login form label, html.not_login form input {
+    color: #fff; }
+  html.not_login .videoBg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 0; }
+    html.not_login .videoBg::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      background-color: #474747; }

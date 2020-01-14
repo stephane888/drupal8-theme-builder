@@ -1,0 +1,189 @@
+global-style:
+  css:
+    theme:
+      css/bootstrap-overlay.css: {}
+      plugins/animate/animate.min.css: {}
+      css/style-auto.css: {}
+      css/style.css: {}
+
+  js:
+    # *********  Js for bootstrap 4 ********************************************************
+    bootstrap-4/assets/js/vendor/popper.min.js: {}
+    bootstrap-4/dist/js/bootstrap.min.js: {}
+    #
+    plugins/lazysizes/lazysizes-gh-pages/lazysizes.min.js: {}
+    # *********  Js for theme ********************************************************
+    # Bootstrap core JavaScript
+    #theme/vendor/bootstrap/js/bootstrap.bundle.min.js: {}
+    # Plugin JavaScript
+    #theme/vendor/jquery-easing/jquery.easing.min.js: {}
+    # Contact form JavaScript
+    #theme/js/jqBootstrapValidation.js: {}
+    #theme/js/contact_me.js: {}
+    # Custom scripts for this template
+    #theme/js/agency.js: {}
+    # *********  Custom scripts ********************************************************
+    js/script-auto.js: {}
+    js/custom-plugin.js: {}
+    js/wbu.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+
+
+
+
+google-police:
+  css:
+    theme:
+      #'https://fonts.googleapis.com/css?family=Montserrat:400,700': { type: external }
+      #'https://fonts.googleapis.com/css?family=Kaushan+Script': { type: external }
+      #'https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic': { type: external }
+      'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700': { type: external }
+      #'https://fonts.googleapis.com/css?family=Oswald:300,400,700': { type: external }
+      'https://fonts.googleapis.com/css?family=Lato:300,400&display=swap': { type: external }
+
+fontawesome:
+#  js:
+#    https://use.fontawesome.com/releases/v5.0.10/js/all.js: { type: external, attributes: {defer: true, integrity: sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+, crossorigin: anonymous } }
+  css:
+    theme:
+      plugins/fontawesome-free-5.8.1-web/css/all.min.css: {}
+      plugins/fontawesome-free-5.8.1-web/css/brands.min.css: {}
+      plugins/fontawesome-free-5.8.1-web/css/fontawesome.min.css: {}
+      plugins/fontawesome-free-5.8.1-web/css/regular.min.css: {}
+      plugins/fontawesome-free-5.8.1-web/css/solid.min.css: {}
+
+#
+parallax:
+  js:
+    js/parallax/scripts/jquery.parallax-1.1.3.js: {}
+
+#
+google-analytics:
+  header: true
+  js:
+    'https://www.googletagmanager.com/gtag/js?id=UA-146309471-1': { type: external, attributes: { async: true } }
+    js/google-analytics.js: {}
+
+#
+front-style:
+  css:
+    theme:
+      css/accueill.css: {}
+
+#
+node:
+  js:
+    js/article/script.js: {}
+  css:
+    theme:
+      css/article.css: {}
+
+#
+node-teaser:
+  css:
+    theme:
+      css/article-teaser.css: {}
+
+
+#
+profil-style:
+  css:
+    theme:
+      css/profil.css: {}
+
+#
+member-ship:
+  css:
+    theme:
+      css/member-ship.css: {}
+  js:
+    js/member-ship.js: {}
+
+#
+timeCircles:
+  css:
+    theme:
+      plugins/TimeCircles-master/inc/TimeCircles.css: {}
+  js:
+    plugins/TimeCircles-master/inc/TimeCircles.js: {}
+
+#
+viewportchecker:
+  js:
+    plugins/jquery-viewport-checker/src/jquery.viewportchecker.js: {}
+
+#
+timeTo:
+  css:
+    theme:
+      plugins/jq-timeTo/timeTo.css: {}
+  js:
+    plugins/jq-timeTo/jquery.time-to.min.js: {}
+    js/time-to.js: {}
+
+#
+styleadmin:
+  css:
+    theme:
+      css/style-admin.css: {}
+  js:
+    js/script-admin.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.ui.draggable
+    - core/jquery.ui.dropable
+    - core/jquery.ui.sortable
+    - core/jquery.ui.dialog
+    - core/jquery.ui.tab
+
+#
+owlcarousel:
+  css:
+    theme:
+      plugins/owl/dist/assets/owl.carousel.min.css: {}
+      plugins/owl/dist/assets/owl.theme.green.css: {}
+  js:
+    plugins/owl/dist/owl.carousel.min.js: {}
+    plugins/owl/wbu-config.js: {}
+  dependencies:
+    - core/jquery
+
+#
+wowJs:
+  js:
+    plugins/wow-js/dist/wow.min.js: {}
+
+#
+lazysize:
+  js:
+    plugins/lazysizes/lazysizes-gh-pages/plugins/bgset/ls.bgset.js: {}
+    plugins/lazysizes/lazysizes-gh-pages/lazysizes.min.js: {}
+
+#
+vue_js:
+  js:
+    plugins/vue-dev/dist/vue.js: {}
+    plugins/components_vuejs/components_default.js: {}
+
+
+sign-in:
+  css:
+    theme:
+      css/sign-in.css: {}
+
+
+#
+page_view_theme_builder:
+  js:
+    js/page-view-theme_builder.js: {}
+
+share-rx:
+  js:
+    #'https://connect.facebook.net/fr_US/sdk.js': { type: external, attributes: { async: true } }
+    js/rx/share.js: {}
+
+convert_csv_to_json:
+  js:
+    plugins/convert-csv-to-json/app.js: {}

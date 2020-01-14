@@ -1,0 +1,1085 @@
+<?php
+// https://themeforest.net/item/massive-dynamic-wordpress-website-builder/13739153?ref=athemez => Massive Dynamic - WordPress Website Builder
+// https://themes.radiantthemes.com/unbound/blog/
+// https://themes.radiantthemes.com/unbound/2018/05/
+
+/**
+ * add config yml
+ * https://www.drupal.org/docs/8/api/configuration-api/simple-configuration-api
+ * https://www.drupal.org/docs/8/creating-custom-modules/defining-and-using-your-own-configuration-in-drupal-8
+ * https://gist.github.com/mikecrittenden/2d2c6734c506d509505fa79142125757
+ */
+
+/**
+ * Form and render elements
+ * https://api.drupal.org/api/drupal/elements/8.6.x
+ */
+
+// https://bootsnipp.com/snippets/prnvG
+
+/**
+ * https://jevelin.shufflehound.com/home/home-event/
+ *
+ * @file
+ * Functions to support theming in the theme.
+ */
+
+/**
+ * https://schema.org/LocalBusiness
+ * https://schema.org/RentAction
+ * https://schema.org/Apartment
+ * https://schema.org/Accommodation
+ */
+use Drupal\theme_builder\MdbootstrapWbu;
+use Drupal\Component\Render\FormattableMarkup;
+use Drupal\debug_log\debugLog;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
+use Stephane888\HtmlBootstrap\SuggestionsMenus;
+use Stephane888\HtmlBootstrap\Controller\Menus;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+/**
+ * config off theme
+ */
+require_once ('inc/config.inc');
+/**
+ * custom config.
+ */
+require_once ('inc/form.inc');
+require_once ('inc/views.inc');
+
+/**
+ * load scss csss
+ */
+function _load_scss()
+{
+  $theme_name = 'theme_builder';
+  // convertie un fichier scss en css.
+  require_once DRUPAL_ROOT . '/themes/' . $theme_name . '/scssphp-master/scss.inc.php';
+  // convert bootstrap scss to css
+  $parser = new Leafo\ScssPhp\Compiler();
+  // build bootstrap end default style theme
+
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/bootstrap-overlay.scss"; body{height:3em;}');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/bootstrap-overlay.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+
+  // build custom style
+  if (LOAD_SCSS_BY_SESSION) {
+    // dump('_load_scss');
+    $Session = new Session();
+    $styles = $Session->get('theme_style', []);
+    // dump($styles);
+    $style = '';
+    if (isset($styles['init'])) {
+      $style .= $styles['init'];
+      $style .= "\n";
+      unset($styles['init']);
+    }
+    $style .= implode("\n", $styles);
+    // $Session->remove('theme_style');
+    // kint($style);
+    /**
+     * on enregistre le fichier generere en scss.
+     */
+    $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/style-auto.scss';
+    $monfichier = fopen($filename, 'w+');
+    fputs($monfichier, $style);
+    fclose($monfichier);
+    /**
+     * compilation du fichier.
+     */
+    $result = $parser->compile('@import "' . $filename . '";');
+    /**
+     * on sauvegarde le fichier css generé.
+     */
+    $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/style-auto.css';
+    $monfichier = fopen($filename, 'w+');
+    fputs($monfichier, $result);
+    fclose($monfichier);
+    /**
+     * Get script
+     */
+    $scripts = $Session->get('theme_script', []);
+    $script = implode("\n", $scripts);
+    /**
+     * On enregistre le fichier generere en js.
+     */
+    $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/js/script-auto.js';
+    $monfichier = fopen($filename, 'w+');
+    fputs($monfichier, $script);
+    fclose($monfichier);
+  }
+
+  // build custom style
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/style.scss";');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/style.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+
+  // build custom style
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/accueill.scss";');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/accueill.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+  /* */
+  // build custom style
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/article.scss";');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/article.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+
+  // build custom style
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/article-teaser.scss";');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/article-teaser.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+
+  // build custom style
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/sign-in.scss";');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/sign-in.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+
+  // build custom style
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/style-admin.scss";');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/style-admin.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+
+  // build custom style
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/ckeditor_custom.scss";');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/ckeditor_custom.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+
+  // build custom member-ship
+  $result = $parser->compile('@import "' . DRUPAL_ROOT . '/themes/' . $theme_name . '/scss/member-ship.scss";');
+  $filename = DRUPAL_ROOT . '/themes/' . $theme_name . '/css/member-ship.css';
+  $monfichier = fopen($filename, 'w+');
+  fputs($monfichier, $result);
+  fclose($monfichier);
+}
+
+/**
+ * implement hook_css_alter
+ *
+ * @param string $css
+ * @param \Drupal\Core\Asset\AttachedAssetsInterface $assets
+ */
+function theme_builder_css_alter(&$css, \Drupal\Core\Asset\AttachedAssetsInterface $assets)
+{
+  // decommente en mode production
+  // _load_scss();
+}
+
+/**
+ * use this fonction on module to alert meta data mymodule_page_attachments_alter(array &$page)
+ *
+ * @param array $variables
+ */
+function theme_builder_preprocess_html(&$variables)
+{
+  // dump( $variables['page']["#attached"]["html_head"]);
+  $_css = [];
+  if (\Drupal\user\Entity\User::load(\Drupal::currentUser()->id())->hasRole('administrator')) {
+    $_css[] = 'administrator';
+  }
+  if (! empty($_css)) {
+    $variables['html_attributes']->setAttribute('class', $_css);
+  }
+}
+
+/**
+ * implement hook_preprocess_page
+ */
+function theme_builder_preprocess_page(&$variables)
+{
+
+  // dump($variables);
+  // decommente en mode developpement
+  // _load_scss();
+  // permet de verifier si c'est la page d'acueil
+  // $variables['wbu_is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  // dump($variables);
+  // custom text
+  /*
+   * $variables['wbu_titre1'] = t(' NIGERIA - CAMEROON ');
+   * $variables['wbu_titre2'] = t(' EXHIBITION ');
+   * $variables['wbu_infos']['l1'] = t(' From 28th May to 01st june 2019 ');
+   * $variables['wbu_infos']['l2'] = t(' Landmark Center Victoria Island Lagos ');
+   * $variables['wbu_infos']['l3'] = t(' Login ');
+   * $variables['wbu_infos']['l4'] = t(' Siége social : Immeuble Tchuis-Square, Château Ngoa Ekelle à côté de l\'INJS ');
+   * $variables['wbu_infos']['l5'] = t(' Tél : +237 242 84 36 71 / 675 55 55 19 ');
+   * $variables['wbu_infos']['l6'] = t(' BP: 20703 ');
+   * $variables['wbu_infos']['l7'] = t(' We believe in Africa ');
+   * $variables['wbu_infos']['l8'] = t(' Participants Space ');
+   * $variables['wbu_infos']['l9'] = t(' Back to home page ');
+   */
+  // echo '<pre>'.$interval->m.' + '.$interval->m + ($interval->y * 12) . ' months </pre>';
+  MdbootstrapWbu::wbupreprocess_page($variables);
+  // MdbootstrapWbu::wbupreprocess_page_getJourJ($variables);
+  // dump($variables['login_url']);
+  // debugLog::logs( \Drupal::config('view'), 'export_view', 'kint', false );
+  // config:views.view.wbu_block_previous
+  // debugLog::logs( \Drupal::config('view')->getStorage()->listAll(), 'views.getStorage_listAll', 'kint', false );
+  // export configurations
+  // debugLog::logs( \Drupal\Core\Serialization\Yaml::encode(\Drupal::config('view')->getStorage()->read('views.view.text_import')), 'views.text_import', 'kint', false );
+  // debugLog::logs( \Drupal::config('view')->getStorage(), 'views_getStorage', 'kint', false );
+  /*
+   * $lists_singleExport = \Drupal::config('view')->getStorage()->listAll();
+   * if ( !in_array( 'views.view.text_import', $lists_singleExport ) ) {
+   * $path_of_module = drupal_get_path( 'module', 'debug_log' );
+   * $path_of_module = DRUPAL_ROOT.'/'.$path_of_module.'/files-log/views.text_import.html';
+   * $text_import = file_get_contents( $path_of_module );
+   * //dump($text_import);
+   * $text_import = \Drupal\Core\Serialization\Yaml::decode($text_import);
+   * //dump(\Drupal::config('view')->getStorage()->write('views.view.text_import', $text_import));
+   * }
+   */
+  /**
+   * remove default message in fornt
+   */
+  if ($variables['is_front']) {
+    // dump($variables['page']['content']);
+    unset($variables['page']['content']['theme_builder_page_title']);
+    unset($variables['page']['content']['theme_builder_content']);
+  }
+
+  /**
+   * group block template
+   */
+  $headers_block = [
+    'theme_builder_page_title',
+    'theme_builder_local_tasks',
+    'theme_builder_help',
+    'theme_builder_local_actions',
+    'formulaireexposeindex_theme_builderpage_1_2',
+    'formulaireexposeindex_theme_builderpage_3'
+  ];
+  //
+  $route_name = \Drupal::routeMatch()->getParameter('view_id');
+  if ($route_name == 'index_theme_builder') {
+    // dump($variables['page']['content']);
+    $block = [];
+    foreach ($variables['page']['content'] as $key => $content) {
+      if (in_array($key, $headers_block)) {
+        $block['header'][$key] = $content;
+      } else {
+        $block['body'][$key] = $content;
+      }
+    }
+    $variables['page']['content'] = [];
+    if (isset($block['header'])) {
+      $variables['page']['content']['header'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => [
+            'page-content-header'
+          ]
+        ],
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => [
+            'class' => [
+              'container separateur-bottom separateur-top'
+            ]
+          ],
+          $block['header']
+        ]
+      ];
+    }
+    if (isset($block['body'])) {
+      $variables['page']['content']['body'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => [
+            'page-content-body'
+          ]
+        ],
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => [
+            'class' => [
+              'container separateur-bottom separateur-top'
+            ]
+          ],
+          $block['body']
+        ]
+      ];
+    }
+  }
+
+  /**
+   * Remove title
+   */
+  if (isset($variables['node']) && $variables['node']->bundle() == 'theme_builder' && isset($variables['page']['content']['theme_builder_page_title'])) {
+    // dump($variables['page']['content']);
+    unset($variables['page']['content']['theme_builder_page_title']);
+  }
+  /**
+   * remove edit for all user except admibistrator
+   */
+  if (! \Drupal\user\Entity\User::load(\Drupal::currentUser()->id())->hasRole('administrator')) {
+    unset($variables['page']['content']['theme_builder_local_tasks']);
+  }
+  // dump();
+  if (isset($_GET['build']) && $_GET['build'] == 'scss') {
+    _load_scss();
+  }
+}
+
+/**
+ *
+ * @param array $variables
+ */
+function theme_builder_preprocess_page__node(&$variables)
+{
+  // dump($variables);
+}
+
+/**
+ * implement hook_preprocess_page
+ */
+function theme_builder_preprocess_page__taxonomy(&$variables)
+{
+  $route_name = \Drupal::routeMatch()->getParameter('taxonomy_term');
+  $getVocabularyId = $route_name->bundle();
+  // $current_path = \Drupal::service('path.current');
+  // debugLog::logs( $route_name->getParameter('taxonomy_term')->getVocabularyId(), 'path_current__getParameters', 'kint0' );
+  // dump($variables);
+  $group = 'theme_builder_taxonomie';
+  $actif = false; // theme_get_setting($group.'actif', 'theme_builder');
+                  // dump($actif);
+  if ($actif) {
+    $results = [];
+    // debugLog::logs( $route_name, 'routeMatch__taxonomy_term', 'kint0' );
+    $use_custom_image = theme_get_setting($group . 'custom_image', 'theme_builder');
+    if ($use_custom_image) {
+      $field_image = theme_get_setting($group . 'field_image', 'theme_builder');
+      if ($route_name->hasField($field_image)) {
+        $img = $route_name->get($field_image)->getValue();
+        if (! empty($img[0])) {
+          $file = \Drupal\file\Entity\File::load($img[0]['target_id']);
+          if ($file) {
+            $results['lx'] = \Drupal\image\Entity\ImageStyle::load('theme_builder_1920x250')->buildUrl($file->getFileUri()) . ' [(min-width: 1400px)]';
+            $results['md'] = \Drupal\image\Entity\ImageStyle::load('theme_builder_1400x250')->buildUrl($file->getFileUri()) . ' [(min-width: 992px) and (max-width: 1399px)]';
+            $results['sm'] = \Drupal\image\Entity\ImageStyle::load('theme_builder_992x250')->buildUrl($file->getFileUri()) . ' [(min-width: 576px) and (max-width: 991px)]';
+            $results['xs'] = \Drupal\image\Entity\ImageStyle::load('theme_builder_577x250')->buildUrl($file->getFileUri()) . ' [(max-width: 575px)]';
+          }
+        }
+        // debugLog::logs( $route_name->get($field_image) , 'routeMatch__taxonomy_term_img', 'kint0' );
+      }
+    }
+    // $variables['VocabularyId']=$getVocabularyId;
+    $fid = theme_get_setting($group . $getVocabularyId . 'image', 'theme_builder');
+
+    if ((! empty($fid) && $fid[0] > 0) && empty($results)) {
+      $file = \Drupal\file\Entity\File::load($fid[0]);
+      if ($file) {
+        $results['lx'] = \Drupal\image\Entity\ImageStyle::load('theme_builder_1920x250')->buildUrl($file->getFileUri()) . ' [(min-width: 1400px)]';
+        $results['md'] = \Drupal\image\Entity\ImageStyle::load('theme_builder_1400x250')->buildUrl($file->getFileUri()) . ' [(min-width: 992px) and (max-width: 1399px)]';
+        $results['sm'] = \Drupal\image\Entity\ImageStyle::load('theme_builder_992x250')->buildUrl($file->getFileUri()) . ' [(min-width: 576px) and (max-width: 991px)]';
+        $results['xs'] = \Drupal\image\Entity\ImageStyle::load('theme_builder_577x250')->buildUrl($file->getFileUri()) . ' [(max-width: 575px)]';
+      }
+    }
+    $variables['page']['VocabularyId'] = $results;
+  } else {
+    /**
+     * group block template
+     */
+    $headers_block = [
+      'theme_builder_page_title',
+      'theme_builder_local_tasks',
+      'theme_builder_help',
+      'theme_builder_local_actions',
+      'formulaireexposeindex_theme_builderpage_1_2'
+    ];
+    $block = [];
+    $breadcrumb = $variables['page']['breadcrumb'];
+    unset($variables['page']['breadcrumb']);
+    foreach ($variables['page']['content'] as $key => $content) {
+      if (in_array($key, $headers_block)) {
+        $block['header'][$key] = $content;
+      } else {
+        $block['body'][$key] = $content;
+      }
+    }
+    $variables['page']['content'] = [];
+    if (isset($block['header'])) {
+      $variables['page']['content']['header'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => [
+            'page-content-header'
+          ]
+        ],
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => [
+            'class' => [
+              'container separateur-bottom separateur-top'
+            ]
+          ],
+          $breadcrumb,
+          $block['header']
+        ]
+      ];
+    }
+    if (isset($block['body'])) {
+      $variables['page']['content']['body'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => [
+            'page-content-body'
+          ]
+        ],
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => [
+            'class' => [
+              'container separateur-bottom separateur-top'
+            ]
+          ],
+          $block['body']
+        ]
+      ];
+    }
+  }
+}
+
+/**
+ *
+ * @param array $variables
+ */
+function theme_builder_preprocess_node(&$variables)
+{
+  // dump($variables);
+  if ($variables['page']) {}
+  // add class for style
+  if (! empty($variables["elements"]["#view_mode"])) {
+    // $variables["elements"]['#attributes']['class'][]='node--modele-'.$variables["elements"]["#view_mode"];
+    $variables["attributes"]['class'][] = 'node--modele-' . $variables["elements"]["#view_mode"];
+
+    if ($variables["elements"]["#view_mode"] == 'teaser' || $variables["elements"]["#view_mode"] == 'cards') {
+      // unset($variables["content"]['field_image']);
+      // build template card for teaser
+      foreach ($variables["content"] as $key => $field) {
+        if (is_array($field) && ! empty($field['#field_type']) && $field['#field_type'] == 'image') {
+          $variables["content"][$key][0]["#item_attributes"]['class'][] = 'card-img-top';
+          // we save the fist image, if field have multiple image.
+          $variables["content"]['card_field_image'][0] = $variables["content"][$key][0];
+          // $variables['content']['links']['#lazy_builder']["attributes"]['add_btn_link']="btn btn-primary waves-effect waves-light";
+          unset($variables["content"][$key]);
+          break;
+        }
+      }
+    }
+  }
+  // add block picture
+  if (isset($variables['author_picture'])) {
+    $variables['author_picture_header'] = $variables['author_picture'];
+  }
+  $variables['author_picture_header']['#theme'] = 'user__header';
+  // dump($variables);
+}
+
+function theme_builder_preprocess_node_full_theme_builder(&$variables)
+{
+  // dump($variables["content"]["#node"]);
+  /**
+   * load form
+   *
+   * @var Ambigous <\Drupal\Core\Entity\EntityInterface, NULL> $webform
+   */
+  $webform = \Drupal::entityTypeManager()->getStorage('webform')->load('envoyer_a_un_ami_e_');
+  if ($webform) {
+    $variables['webform_custom'] = $webform->getSubmissionForm();
+  }
+}
+
+/**
+ *
+ * @param array $variables
+ */
+function theme_builder_preprocess_node_teaser_theme_builder(&$variables)
+{
+  // dump($variables['content']["#contextual_links"]["node"]["route_parameters"]["node"]);
+  // debugLog::logs( $variables['content']["#contextual_links"], 'node_content', 'kint0', true );
+  $variables['wbu_nodeurl'] = '#';
+  if (isset($variables['content']["#contextual_links"]["node"]["route_parameters"]["node"])) {
+    $options = [
+      'absolute' => TRUE
+    ];
+    $id = $variables['content']["#contextual_links"]["node"]["route_parameters"]["node"];
+    $url = Url::fromRoute('entity.node.canonical', [
+      'node' => $id
+    ], $options);
+    $variables['wbu_nodeurl'] = $url->toString();
+  }
+}
+
+function theme_builder_preprocess_comment__comment(&$variables)
+{
+  $variables['user_picture_header'] = $variables['user_picture'];
+  $variables['user_picture_header']['#theme'] = 'user__comment';
+  // dump($variables);
+}
+
+function theme_builder_preprocess_field(&$variables)
+{
+  // dump($variables);
+  if (isset($variables['element']['#field_type']) && $variables['element']['#field_type'] == 'boolean') {
+    // dump($variables['element']['#object']);
+    // debugLog::logs( $variables['element']['#object']->get('field_transaction')->getValue() , 'field_transaction', 'kint0', true);
+    $value = $variables['element']['#object']->get($variables['field_name'])->getValue();
+    if (! empty($value[0])) {
+      $variables['attributes']['class'][] = 'boolean-' . $value[0]['value'];
+    }
+  }
+  /**
+   * for link
+   */
+  if (isset($variables['element']['#field_name']) && $variables['element']['#field_name'] == 'node_link') {
+    foreach ($variables['items'] as $key => $value) {
+      // debugLog::logs( $variables['items'] , 'field_link_items', 'kint', true);
+      $variables['items'][$key]['attributes']->addClass('btn');
+      $variables['items'][$key]['attributes']->addClass('btn-outline-danger');
+    }
+    // dump($variables);
+  }
+}
+
+/**
+ */
+function theme_builder_preprocess_field__image(&$variables)
+{
+  // dump($variables);
+  foreach ($variables['items'] as $key => $item) {
+    $image = $item['content']['#item']->getValue();
+    $file = \Drupal\file\Entity\File::load($image['target_id']);
+    if ($file) {
+      // dump($file->getFileUri());
+    }
+  }
+}
+
+/**
+ *
+ * @param array $variables
+ */
+function theme_builder_preprocess_image_url(&$variables)
+{
+  if (isset($variables['image_style'])) {
+    $image_style = \Drupal\image\Entity\ImageStyle::load($variables['image_style']);
+    if ($image_style) {
+      $variables['image_url'] = $image_style->buildUrl($variables['file']->getFileUri());
+    }
+  }
+}
+
+/**
+ * return url for file.
+ *
+ * @param array $variables
+ */
+function theme_builder_preprocess_block_theme_builder_img_bg(&$variables)
+{
+  /**
+   * return url for file.
+   */
+  foreach ($variables['content']['image'] as $key => $value) {
+    if (isset($value['#field_type']) && $value['#field_type'] == 'image') {
+      if (isset($value[0]["#markup"])) {
+        $variables['content']['image'] = $value[0]["#markup"];
+      }
+    }
+  }
+  if (is_string($variables['content']['image'])) {
+    $variables['attributes']['style'] = 'background-image:url(' . $variables['content']['image'] . ');';
+  }
+}
+
+/**
+ * return url for file.
+ *
+ * @param array $variables
+ */
+function theme_builder_preprocess_block_theme_builder_left(&$variables)
+{
+  /**
+   * return url for file.
+   */
+  foreach ($variables['content']['image'] as $key => $value) {
+    if (isset($value['#field_type']) && $value['#field_type'] == 'image') {
+      if (isset($value[0]["#markup"])) {
+        $variables['content']['image'] = $value[0]["#markup"];
+      }
+    }
+  }
+  if (is_string($variables['content']['image'])) {
+    //
+    $variables['attributes_image'] = new Attribute();
+    // $variables['attributes_image']['style'] = 'background-image:url(' . $variables['content']['image'] . ');';
+    $variables['attributes_image']->setAttribute('data-style', $variables['content']['image']);
+    $variables['attributes_image']->setAttribute('style', 'background-image:url(' . $variables['content']['image'] . ');');
+  }
+}
+
+/**
+ *
+ * @param int $existing
+ * @param int $type
+ * @param int $theme
+ * @param int $path
+ * @return NULL[][][]
+ */
+function theme_builder_theme($existing, $type, $theme, $path)
+{
+  return [
+    // views-view-field-cutom
+    'views_view_field_cutom' => [
+      'variables' => [
+        'field' => []
+      ]
+    ],
+    'image_url' => [
+      'variables' => [
+        'image_style' => NULL,
+        'file' => null,
+        'width' => null,
+        'height' => null
+      ],
+      'path' => drupal_get_path('theme', 'theme_builder') . '/templates/layouts'
+      // 'path' => 'templates/layouts'
+    ]
+  ];
+}
+
+/**
+ * implement hook_preprocess_HOOK
+ */
+function theme_builder_preprocess_menu(&$variables)
+{
+  if ($variables['theme_hook_original'] != 'menu__toolbar__admin') {
+    $theme_hook_original = $variables['theme_hook_original'];
+    /**
+     * Il faut creer en Admin l'item user/register=>inscription.
+     * De plus, il faut supprimer user/register si l'utilisateur est connecté.
+     */
+    if ($theme_hook_original == 'menu__account') {
+      /**
+       * remove user.register if user is connecté.
+       */
+      if (\Drupal::currentUser()->isAuthenticated()) {
+        $variables['items'] = Menus::MenuDeleteIemByRouteName($variables['items'], 'user.register');
+      }
+      if (TEMPLATE_menu__account == 'menu__account_icon') {
+        $icones = [
+          'user.page' => '<i class="fas fa-user-tie pr-1"></i>',
+          'user.logout' => '<i class="fas fa-unlock-alt pr-1"></i>',
+          'user.login' => '<i class="fas fa-sign-in-alt pr-1"></i>',
+          'user.register' => '<i class="fas fa-user-tie pr-1"></i>'
+        ];
+        $variables['items'] = Menus::MenuAddIcones($variables['items'], $icones);
+      }
+    } else if ($theme_hook_original == 'menu__main') {
+      if (TEMPLATE_menu__main == 'menu__main_full') {
+      /**
+       * Nothing to do for now.
+       */
+      }
+    }
+    // dump($variables);
+  }
+}
+
+/**
+ * implement hook_theme_suggestions_HOOK_alter()
+ * ALter menu.
+ * This hook allows any module or theme to provide alternative theme function or template name suggestions and reorder or remove suggestions provided by hook_theme_suggestions_HOOK()
+ */
+function theme_builder_theme_suggestions_menu_alter(array &$suggestions, array &$variables, $hook)
+{
+  if ($variables['theme_hook_original'] != 'menu__toolbar__admin') {
+    $theme_hook_original = $variables['theme_hook_original'];
+    $options = [];
+    // dump($variables['theme_hook_original']);
+    if ($theme_hook_original == 'menu__account') {
+      $options['template'] = TEMPLATE_menu__account;
+    } else if ($theme_hook_original == 'menu__main') {
+      $options['template'] = TEMPLATE_menu__main;
+    }
+    $new_suggestions = SuggestionsMenus::Suggestions($theme_hook_original, $options);
+    foreach ($new_suggestions as $value) {
+      $suggestions[] = $value;
+    }
+  }
+}
+
+/**
+ *
+ * @param string $variables
+ */
+function theme_builder_preprocess_links__node(&$variables)
+{
+  // dump($variables);
+  if (! empty($variables['links']['node-readmore']) && ! empty($variables['links']['node-readmore']['link']['#url'])) {
+    // dump( $variables['links']['node-readmore']['link']['#url']->getOption('entity')->getFieldDefinitions() );
+    // echo '<pre> <p>Définition <br>: </p>'; print_r(get_class_methods( $variables['links']['node-readmore']['link']['#url']->getOption('entity')->getFieldDefinitions() )); echo '</pre>';
+    // echo '<pre> <p>Définition <br>: </p>'; print_r(get_class_methods( $variables['links']['node-readmore']['link']['#url']->getOption('entity') )); echo '</pre>';
+  }
+}
+
+/**
+ */
+function theme_builder_preprocess_links__language_block(&$variables)
+{
+  // dump($variables);
+  if (! empty($variables['links']['fr'])) {
+    $variables['links']['fr']["text"] = $variables['links']['fr']["link"]["#title"] = "Français (FR)";
+  }
+  if (! empty($variables['links']['en'])) {
+    $variables['links']['en']["text"] = $variables['links']['en']["link"]["#title"] = "Enghish (EN)";
+  }
+  // dump($variables);
+}
+
+/**
+ * implement hook_preprocess_menu__main
+ */
+function theme_builder_preprocess_block(&$variables)
+{
+  // construction des section
+  // cas 1, si cela provient de views
+  if (! empty($variables["elements"]['#base_plugin_id']) && $variables["elements"]['#base_plugin_id'] == "views_block") { // onfiltre tout ce qui provient de views
+                                                                                                                          // on verifie si la views a la classe section comme premiere classe
+    if (! empty($variables['content']["#view"]->query->displayHandler) && ! empty($variables["label"])) {
+      if (! empty($variables['content']["#view"]->query->displayHandler->getOption('css_class'))) {
+        $class = explode(" ", $variables['content']["#view"]->query->displayHandler->getOption('css_class'));
+        if ($class[0] == 'section' || $class[0] == 'cards' || $class[0] == 'wbu_row_custom' || $class[0] == 'wbu_row') {
+          $variables['section_titre'] = [
+            '#theme' => 'section_titre',
+            '#contenttitre' => $variables["label"]
+          ];
+          $variables["label"] = '';
+          // dump($variables);
+        }
+      }
+    }
+  }
+  /**
+   * override block menu
+   */
+  if ($variables["base_plugin_id"] == 'system_menu_block') {
+    if ($variables['derivative_plugin_id'] == 'mon-compte') {}
+    // dump($variables);
+  }
+  // dump($variables);
+}
+
+/**
+ * implement hook_theme_suggestions_HOOK_alter()
+ */
+function theme_builder_theme_suggestions_block_alter(array &$suggestions, array &$variables, $hook)
+{
+  if (! empty($variables['elements']['#id'])) {
+    // $block = Drupal\block\Entity\Block::load($variables['elements']['#id']);
+    // $block->getRegion();
+    /**
+     * Formatage du container main menu.
+     */
+    if (isset($variables['elements']["#plugin_id"]) && $variables['elements']["#plugin_id"] == 'system_menu_block:main') {
+      if (TEMPLATE_menu__main == 'menu__main_full') {
+        $suggestions[] = 'block__' . TEMPLATE_menu__main;
+      }
+    }
+  }
+
+  // dump($variables);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for region.html.twig.
+ */
+function theme_builder_preprocess_region(&$variables)
+{
+  // dump($variables);
+  $variables['attributes']['class'][0] = 'row-0';
+  // dump($variables);
+}
+
+/**
+ *
+ * @param int $variables
+ */
+function theme_builder_preprocess_image(&$variables)
+{
+  // dump($variables);
+  $variables["attributes"]['class'][] = 'img-fluid';
+}
+
+/**
+ *
+ * @param int $variables
+ */
+function theme_builder_preprocess_image_formatter(&$variables)
+{
+  // dump($variables);
+  // $bundles = $variables['item']->getFieldDefinition()->getFieldStorageDefinition()->getBundles();
+  // dump($variables['item']->getTypedDataManager());
+  // $variables["attributes"]['class'][]='img-fluid';
+}
+
+function theme_builder_preprocess_form_element(&$variables)
+{
+  if (! empty($variables["element"]["#type"]) && $variables['element']['#type'] == 'checkbox') {
+    if (! empty($variables["label"]["#children"])) {
+      $variables["children"] = new FormattableMarkup($variables["label"]["#children"], []);
+      $variables["label"]['#attributes']['class'][] = 'custom-control-label';
+      unset($variables["label"]["#children"]);
+      // $variables["label"]["#children"] = '';
+    }
+    // dump($variables);
+  }
+}
+
+function theme_builder_preprocess_file_upload_help(&$variables)
+{
+  if (! empty($variables['popover']) && ! empty($variables['popover']['requirements']['#attributes'])) {
+    $variables['popover']['requirements']['#attributes']['class'] = [];
+    $variables['popover']['requirements']['#attributes']['class'][] = 'help-block';
+  }
+}
+
+/**
+ */
+function theme_builder_preprocess_page_title(&$variables)
+{
+  // dump($variables);
+  if (is_array($variables["title"]) && empty($variables["title"]["#markup"])) {
+    $variables["title"]["#printed"] = false;
+  }
+  /**
+   * add name for author if user visite author page
+   */
+  // dump($route_name = \Drupal::routeMatch()->getParameters());
+  if (\Drupal::routeMatch()->getParameter('view_id') == 'index_theme_builder' && \Drupal::routeMatch()->getParameter('user')) {
+    $current_user_view = \Drupal::routeMatch()->getParameter('user');
+    $field_nom_de_l_agence = $current_user_view->get('field_nom_de_l_agence')->getValue();
+    if (! empty($field_nom_de_l_agence)) {
+      // $variables["title"]["#markup"] = $field_nom_de_l_agence[0]['value'];
+      $variables["title"]["children"] = [
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#attributes' => [
+            'class' => [
+              'sous-titre'
+            ]
+          ],
+          '#value' => $field_nom_de_l_agence[0]['value'] . ' vous propose '
+        ],
+        [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#attributes' => [
+            'class' => [
+              'text-one-line'
+            ]
+          ],
+          '#value' => $variables["title"]["#markup"]
+        ]
+      ];
+      unset($variables["title"]["#markup"], $variables["title"]["#children"]);
+    }
+  }
+}
+
+/**
+ *
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap\Plugin\Alter\ThemeSuggestions::alter()
+ */
+// function theme_builder_theme_suggestions_alter(&$suggestions, $variables, $hook) {
+// dump($suggestions);
+// dump($hook);
+// }
+
+/**
+ * implemente hook_theme_suggestions_HOOK_alter
+ *
+ * @param int $suggestions
+ * @param int $variables
+ * @param int $hook
+ */
+function theme_builder_theme_suggestions_node_alter(array &$suggestions, array $variables)
+{
+  // dump($suggestions);
+  // dump($hook);
+  if (! empty($variables["elements"]["#view_mode"])) {
+    $suggestions[] = 'node__modele_' . $variables["elements"]["#view_mode"];
+  }
+}
+
+/**
+ * implemente hook_theme_suggestions_HOOK_alter
+ *
+ * @param int $suggestions
+ * @param int $variables
+ */
+function theme_builder_theme_suggestions_page_alter(array &$suggestions, array $variables)
+{
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node) {
+    $suggestions[] = 'page__' . $node->bundle() . '_node';
+  }
+}
+
+/**
+ * implemente hook_theme_suggestions_HOOK_alter
+ *
+ * @param int $suggestions
+ * @param int $variables
+ * @param int $hook
+ */
+function theme_builder_theme_suggestions_links_alter(array &$suggestions, array $variables)
+{
+  // dump($suggestions);
+  if (! empty($variables['links']['node-readmore'])) {
+    // dump($variables);
+    $suggestions[] = 'links__node_readmore';
+    $suggestions[] = 'links__node_' . $variables['links']['node-readmore']['url']->getOption('entity')->getType();
+    // dump( $variables['links']['node-readmore']['url']->getOption('entity')->getType() );
+    // echo '<pre> <p>Définition <br>: </p>'; print_r(get_class_methods( $variables['links']['node-readmore']['url']->getOption('entity')->getType() )); echo '</pre>';
+    // echo '<pre> <p>Définition <br>: </p>'; print_r(get_class_methods( $variables['links']['node-readmore']['link']['#url']->getOption('entity') )); echo '</pre>';
+  }
+}
+
+/**
+ *
+ * @param array $suggestions
+ * @param array $variables
+ */
+function theme_builder_theme_suggestions_form_element_alter(array &$suggestions, array $variables)
+{
+  // dump($variables);
+  if (! empty($variables['element']['#type'])) {
+    $suggestions[] = 'form_element__' . $variables['element']['#type'];
+  }
+}
+
+/**
+ *
+ * @param array $suggestions
+ * @param array $variables
+ */
+function theme_builder_theme_suggestions_details_alter(array &$suggestions, array $variables)
+{
+  // dump($variables);
+  if (! empty($variables['element']['#type'])) {
+    $suggestions[] = 'details__panels_card';
+  }
+}
+
+/**
+ *
+ * @param string $form
+ * @param string $form_state
+ */
+function theme_builder_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id = NULL)
+{
+  if (isset($form_id)) {
+    return;
+  }
+  MdbootstrapWbu::defineSetting($form, $form_state);
+}
+
+/**
+ * Make the uploaded images permanent.
+ *
+ * @param array $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function theme_builder_settings_form_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+  // $account = \Drupal::currentUser();
+  $values = $form_state->getValues();
+  // dump($values);
+  foreach ($values as $key => $value) {
+    if (strstr($key, 'theme_builder')) {
+      // check if field is image
+      if (is_array($value) && ! empty($value[0]) && (intval($value[0]) > 0)) {
+        _saveimage($values[$key]);
+      }
+    }
+  }
+}
+
+/**
+ * Save image
+ *
+ * @param array $image
+ */
+function _saveimage($image)
+{
+  if (! empty($image)) {
+
+    // Load the file via file.fid.
+    if ($file = \Drupal\file\Entity\File::load($image[0])) {
+      // Change status to permanent.
+      $file->setPermanent();
+      $file->save();
+      $file_usage = \Drupal::service('file.usage');
+      // $file_usage->add($file, 'user', 'user', $account->id());
+      $file_usage->add($file, 'theme_builder', 'theme', $image[0]);
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

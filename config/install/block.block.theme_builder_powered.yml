@@ -1,0 +1,20 @@
+langcode: fr
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - theme_builder
+
+id: theme_builder_powered
+theme: theme_builder
+region: header
+weight: 10
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Propulsé par Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

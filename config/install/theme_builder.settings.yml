@@ -1,0 +1,48 @@
+## les champs configurable doivent avoir un _ et les autre __
+theme_builder_topheader_status: false
+theme_builder_topheader_value: 'default'
+
+theme_builder_header_status: true
+theme_builder_header_value: 'logo_center'
+
+# Configuation du slider
+theme_builder_slide_status: true
+theme_builder_slide_value: 'CarouselBootstrap'  # permet de charger le model de disporama.
+theme_builder_slide_provider: 'theme' # Le founirsseur de contenu qui peut etre via le theme, un type de node ou une views.
+theme_builder_slide_routes: 'view.frontpage.page_1' #
+
+
+# Configuration de cards.
+theme_builder_cards_status: true
+theme_builder_cards_value: 'IconeModelFlat' # model par defaut pour ce theme.
+theme_builder_cards_provider: 'theme'
+theme_builder_cards_nombre_item: 8
+
+# Configuration de carouselcards.
+theme_builder_carouselcards_status: true
+theme_builder_carouselcards_value: 'Modele1' # model par defaut pour ce theme.
+theme_builder_carouselcards_provider: 'theme'
+theme_builder_carouselcards_nombre_item: 7
+
+# Configuration de callactions.
+theme_builder_callactions_status: true
+theme_builder_callactions_value: 'TextActionModele1' # model par defaut pour ce theme.
+theme_builder_callactions_provider: 'theme'
+
+# Configuration de comments.
+theme_builder_comments_status: true
+theme_builder_comments_value: 'TextActionModele1' # model par defaut pour ce theme.
+theme_builder_comments_provider: 'theme'
+
+# Configuration de footers.
+theme_builder_footers_status: true
+theme_builder_footers_value: 'footerm1' # model par defaut pour ce theme.
+theme_builder_footers_provider: 'theme'
+
+# Configuration de theme_builder_imagetextrightleft
+theme_builder_imagetextrightleft_status: true
+theme_builder_imagetextrightleft_value: 'default'
+theme_builder_imagetextrightleft_provider: 'theme'
+
+# Disable the CDN provider so compiled source files can be used.
+cdn_provider: ''

@@ -1,0 +1,38 @@
+<div class="header-media separateur-bottom">
+  {% if page.blockcontent %}
+    <div{{attrib_theme_builder_bg_img_front}}>
+      <div class="container">
+        <div class="content-body">{{page.blockcontent}}</div>
+      </div>
+    </div>
+  {% else %}
+  {#
+    <div{{attrib_theme_builder_bg_img_front}}>
+      <div class="container">
+        <div class="content-body">{{theme_builder_bg_img_front.texte}}</div>
+      </div>
+    </div>
+    #}    
+  {% endif %}
+  {% set id %}id-{{date().timestamp}}{% endset %}
+        {% set owls = { 
+          'id': id, 
+          'items': theme_builder_bg_img_front.lists, 
+          'data_interval': 5000,
+          'indicators':true,
+          'control':true, 
+          } 
+        %}
+    {% include '@theme_builder/inc/owl.html.twig' %} 
+  {% if page.themeheader %}
+    <div class="advanced-search-front">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="content-search-form">{{page.themeheader}}</div>
+            </div>
+          </div>
+        </div>
+    </div>
+  {% endif %}
+</div>

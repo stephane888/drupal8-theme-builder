@@ -1,0 +1,28 @@
+{#
+{% set id %}id-{{date().timestamp}}{% endset %}
+{% set owls = { 
+  'id': id, 
+  'items': items, 
+  'data_interval': 5000,
+  'indicators':true,
+  'control':true, 
+  } 
+%}
+#}
+<div class="owl-carousel owl-theme" id="{{ id }}" 
+data-responsive='{
+"items":1,
+"margin":0,
+"loop":true,
+"center":true,
+"autoplay":true,
+"dots":false,
+"autoplayTimeout":70000,
+"smartSpeed":250,
+"animateOut": "slideOutUp",
+"animateIn": "slideInUp"
+}'>
+    {% for key, owl in owls.items %}
+      <div{{ owl.attributes }}>{{ owl.content }}</div>
+    {% endfor %}
+</div>

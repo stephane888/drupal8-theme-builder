@@ -1,0 +1,14 @@
+<div {{ attributes.addClass('hero-left') }}>
+    <div class="row row-col-0">
+      {% if content.main %}
+      <div class="col-sm-6 item img-bg {{ attributes_image }}">
+        <div class="titre ml-auto mr-lg-3">{{ content.main }}</div>
+      </div>
+      {% endif %}
+      {% if content.bottom %}
+      <div class="col-sm-6 item content-txt ">
+        <div class="description mr-auto ml-lg-3">{{ content.bottom }}</div>
+      </div>
+      {% endif %}
+    </div>
+</div>

@@ -1,0 +1,20 @@
+langcode: fr
+status: false
+dependencies:
+  module:
+    - search
+  theme:
+    - theme_builder
+
+id: theme_builder_search
+theme: theme_builder
+region: header
+weight: -1
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Rechercher
+  provider: search
+  label_display: visible
+visibility: {  }

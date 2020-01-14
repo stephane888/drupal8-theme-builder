@@ -1,0 +1,36 @@
+/**
+ * for mb-bootstrap
+ */
+/**
+ * color theme
+ */
+/**
+ * la police
+ */
+/**
+ * Defzult style for drupal and bootstrap.
+ */
+/**
+ * translation on hover
+ */
+/**
+ * Before cover
+ */
+/**
+ * Before cover
+ */
+/**
+ *  pas de retour à la ligne
+ */
+/**
+ *  mixin for multiline limit text css
+ */
+/*!
+ * .list-element{@include list-element(($paddingY:10px, $paddingX:5px, $borderW:1px));}
+ */
+/**
+ *  Images area to preload,
+ *  on ajoute sur la div contenant l'image
+ */
+.container {
+  max-width: 1200px !important; }

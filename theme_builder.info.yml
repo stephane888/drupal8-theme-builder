@@ -1,0 +1,42 @@
+name: theme_builder
+type: theme
+description: 'This theme is built for conferences, exhibitions, events. The configuration is intuitive and you can load the content of the demonstration'
+core: 8.x
+base theme: bootstrap_barrio
+
+screenshot: theme_builder.png
+
+regions:
+  header: 'header'
+  before_content: 'beforeContent'
+  content: 'content'
+  after_content: 'afterContent'
+  footer: 'footer'
+
+libraries:
+  - theme_builder/global-style
+  - theme_builder/fontawesome
+  - theme_builder/lazysize
+  - theme_builder/google-police
+  - theme_builder/google-analytics
+  - theme_builder/share-rx
+
+# Add custom css to ckeditor
+ckeditor_stylesheets:
+  - css/bootstrap.css
+  - css/style.css
+  #- css/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css
+  - css/ckeditor_custom.css
+  - https://fonts.googleapis.com/css?family=Roboto:300,400,500,700
+  - https://fonts.googleapis.com/css?family=Lato:300,400&display=swap
+
+libraries-override:
+  bootstrap_barrio/global-styling:
+    css:
+      component:
+        css/components/field.css: false
+        css/components/site-footer.css: false
+  bootstrap_barrio/node:
+    css:
+      component:
+        css/components/node.css: false

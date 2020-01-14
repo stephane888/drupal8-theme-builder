@@ -1,0 +1,33 @@
+theme_builder.small:
+  label: 'BP small'
+  mediaQuery: '(min-width: 0px)'
+  weight: 0
+  multipliers:
+    - 1x
+    - 2x
+
+theme_builder.medium:
+  label: 'BP medium'
+  mediaQuery: '(min-width: 768px)'
+  weight: 1
+  multipliers:
+    - 1x
+    - 2x
+
+theme_builder.large:
+  label: 'BP large'
+  mediaQuery: '(min-width: 1200px)'
+  weight: 2
+  multipliers:
+    - 1x
+    - 2x
+
+theme_builder.extralarge:
+  label: 'BP extralarge'
+  mediaQuery: '(min-width: 1600px)'
+  weight: 3
+  multipliers:
+    - 1x
+    - 2x    
+    
+# https://www.prometsource.com/blog/how-set-responsive-images-drupal-8

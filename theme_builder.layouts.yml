@@ -1,0 +1,219 @@
+one_column:
+  label: 'One column'
+  category: 'Template theme_builder'
+  template: templates/layouts/one-column
+  default_region: main
+  regions:
+    main:
+      label: Main content      
+two_column:
+  label: 'Two column'
+  category: 'Template theme_builder'
+  template: templates/layouts/two-column
+  default_region: main
+  regions:
+    main:
+      label: Main content
+    sidebar:
+      label: Sidebar
+form_theme_builder:
+  label: 'form theme_builder'
+  category: 'Template theme_builder'
+  template: templates/layouts/form-theme_builder
+  default_region: left
+  regions:
+    left:
+      label: Left content
+    right:
+      label: Right content
+    bottom:
+      label: Bottom content
+node_teaser_theme_builder:
+  label: 'Affichage moyen theme_builder'
+  category: 'Template theme_builder'
+  template: templates/layouts/node-teaser-theme_builder  
+  regions:
+    image:
+      label: Image 
+    statut:
+      label: Statut( for sale / for rent )
+    price:
+      label: Price
+    quick_display:
+      label: quick display
+    title:
+      label: Title
+    sub_title:
+      label: Sub title
+    options:
+      label: Option for node
+    link:
+      label: Link (call action) 
+    autor:
+      label: auteur du contenu
+    time_ago:
+      label: Time a go 
+block_theme_builder_img_bg:
+  label: 'Bloc image en arriere plan'
+  category: 'Template theme_builder'
+  template: templates/layouts/block/block-theme_builder-img-bg
+  default_region: main
+  regions:
+    main:
+      label: Content title
+    bottom:
+      label: content description
+    image:
+      label: Background image
+block_theme_builder_left:
+  label: 'Bloc image à gauche'
+  category: 'Template theme_builder'
+  template: templates/layouts/block/block-theme_builder-left
+  default_region: main
+  regions:
+    main:
+      label: Content title
+    bottom:
+      label: content description
+    image:
+      label: Background image   
+block_theme_builder_link:
+  label: 'Bloc pour lien'
+  category: 'Template theme_builder'
+  template: templates/layouts/block/block-theme_builder-link
+  default_region: main
+  regions:
+    main:
+      label: Content title
+    link:
+      label: Content link
+    image:
+      label: Content image 
+node_full_theme_builder:
+  label: 'node theme_builder full '
+  category: 'Template theme_builder'
+  template: templates/layouts/node-full-theme_builder
+  default_region: main
+  regions:
+    main:
+      label: header
+    location:
+      label: location
+    main_user:
+      label: header user
+    main_date:
+      label: main date
+    main_price:
+      label: main price
+    images:
+      label: images
+    description:
+      label: description
+    options:
+      label: options
+    form:
+      label: Formulaire
+    send_friend:
+      label: Formulaire send to friend
+
+block_theme_builder_profil:
+  label: 'Bloc 2 colonnes '
+  category: 'Template theme_builder'
+  template: templates/layouts/block/block-theme_builder-profil
+  default_region: left
+  regions:
+    left:
+      label: Content left
+    top:
+      label: Content top
+    bottom:
+      label: Content bottom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+    'full-theme_builder'
+  ]
+%}
+{# {{ dump() }} #}
+<article{{ attributes.addClass(classes) }}>
+  <header class="container-header">
+    <div class="header">{{ content.main }}</div>
+    <div class="header-location"><i class="fas fa-map-marker-alt"></i>{{ content.location }}</div>
+    <div class="user">
+      <div><i class="fas fa-user-tie"></i><span>publié par</span> {{ content.main_user }}</div>
+      <div><i class="far fa-clock"></i><span>Mise à jour</span> {{ content.main_date }}</div>
+    </div>
+    <div class="price">{{ content.main_price }}</div>
+    <div class="d-flex justify-content-between share-block">
+      <div class="socialmediaicons ml-0"></div>
+      <div class=""><span class="btn btn-outline-secondary" data-target="#immoModal" data-toggle="modal">Envoyez à un ami</span></div>
+    </div>
+    <div class="images">{{ content.images }}</div>
+  </header>
+  <div class="container-description">{{ content.description }}</div>
+  <div class="field__label">Options</div>
+  <div class="container-options">    
+  {{ content.options }}</div>
+  <div class="container-form">{{ content.form }}</div>
+</article>
+{{ attach_library('theme_builder/share-rx') }}
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="immoModal" tabindex="-1" role="dialog" aria-labelledby="immoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="immoModalLabel">Envoyer à un ami(e) : {{ content['#node'].getTitle() }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ webform_custom }}
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

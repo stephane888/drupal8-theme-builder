@@ -1,0 +1,35 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+    'clearfix',
+    'teaser-theme_builder'
+  ]
+%}
+
+<article{{ attributes.addClass(classes) }}>
+  <a href="{{ wbu_nodeurl }}" class="block-container-image">
+  <div class="container-image">
+    <div class="image">{{ content.image }}</div>
+    <div class="statut">{{ content.statut }}</div>
+    <div class="price">{{ content.price }}</div>
+    <div class="quick_display"><i class="fas fa-camera"></i>{{ content.quick_display }}</div>
+  </div>
+  </a>
+  <div class="container-texte">
+    <div class="title">{{ content.title }}</div>
+    <div class="sub_title">{{ content.sub_title }}</div>
+    <div class="container-options d-flex">
+      <div class="options">{{ content.options }}</div>
+      <div class="link">{{ content.link }}</div>
+    </div>
+    <div class="container-author d-flex">
+      <div class="autor">{{ content.autor }}</div>
+      <div class="time_ago">{{ content.time_ago }}</div>
+    </div>
+  </div>
+</article>

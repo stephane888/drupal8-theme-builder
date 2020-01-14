@@ -1,0 +1,146 @@
+<!-- form-template-input -->
+<template id="form-template-input">
+<div class="form-group" :class="classe">
+  <label :for="id_html" v-html="label"></label> 
+  <input :id="id_html" class="form-control"  :value="value" @input="oninput" >
+</div>
+</template>
+<!-- form-template-select -->
+<template id="form-template-select">
+<div class="form-group" :class="classe">
+  <label :for="id_html" v-html="label"></label> 
+  <select :id="id_html" @input="oninput" :value="value" class="form-control">
+    <option v-for="(option, index) in options" v-html="option" :value="index"></option>
+  </select>
+</div>
+</template>
+<!-- form-template-input -->
+<template id="form-template-input-v2">
+<div :class="classe">
+    <div class="form-group" :class="classe">
+      <label :for="id_html" v-html="label"></label> 
+      <input :id="id_html" class="form-control" v-model="input.value" >
+    </div>
+</div>
+</template>
+<!-- form-template-select -->
+<template id="form-template-select-v2">
+<div :class="classe">
+    <div class="form-group" >
+      <label :for="id_html" v-html="label"></label> 
+      <select :id="id_html" v-model="input.value" class="form-control">
+        <option v-for="(option, index) in options" v-html="option" :value="index"></option>
+      </select>
+    </div>
+</div>
+</template>
+<!-- template-bootstrap-col-v2 -->
+<template id="template-bootstrap-col-v2">
+  <div class="" >
+    <div class="row"><input_text_v2 :input="nbr_col" :label="'Number of columns'" :classe="'col-sm-4'"></input_text_v2></div>
+    <div class="border p-3 ">
+        <div class="row">
+          <input_select_v2 :input="col" :label="'col-'" :options="getNumberColumn()" :classe="'col-sm-3'"></input_select_v2>
+          <input_select_v2 :input="col_sm" :label="'col-sm-'" :options="getNumberColumn('col-sm-')" :classe="'col-sm-3'"></input_select_v2>
+          <input_select_v2 :input="col_md" :label="'col-md-'" :options="getNumberColumn('col-md-')" :classe="'col-sm-3'"></input_select_v2>
+          <input_select_v2 :input="col_lg" :label="'col-lg-'" :options="getNumberColumn('col-lg-')" :classe="'col-sm-3'"></input_select_v2>
+        </div>
+    </div>
+</div>
+</template> 
+
+<!-- template-bootstrap-col-v2 -->
+<template id="template-bootstrap-col-v3">
+  <div class="" >
+    <div class="row">
+      <input_text_v2 :input="nbr_col" :label="'Number of columns'" :classe="'col-sm-3'"></input_text_v2>
+    </div>
+    <div class="border p-3 ">
+        <div class="row">
+          <input_select_v2 :input="col" :label="'col-'" :options="getNumberColumn()" :classe="'col-sm-3'"></input_select_v2>
+          <input_select_v2 :input="col_sm" :label="'col-sm-'" :options="getNumberColumn('col-sm-')" :classe="'col-sm-3'"></input_select_v2>
+          <input_select_v2 :input="col_md" :label="'col-md-'" :options="getNumberColumn('col-md-')" :classe="'col-sm-3'"></input_select_v2>
+          <input_select_v2 :input="col_lg" :label="'col-lg-'" :options="getNumberColumn('col-lg-')" :classe="'col-sm-3'"></input_select_v2>
+        </div>
+    </div>
+  </div>
+</template> 
+
+
+<!-- template-view-list-field -->
+<template id="template-view-list-field">
+<div class="border p-3">
+  <div class="row row-col-my-2">
+      <input_select_v2 v-for="(field, field_name) in fields" :label="field.field" :input="field.data" :options="options"  :classe="'col-sm-2'"></input_select_v2>    
+  </div>
+</div>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
