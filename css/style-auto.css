@@ -32,6 +32,9 @@
  *  Images area to preload,
  *  on ajoute sur la div contenant l'image
  */
+/**
+ *
+ */
 .rx-logos {
   padding: 8px 16px; }
   .rx-logos .rx-logo {
@@ -316,17 +319,23 @@ h6, .h6 {
         content: '...';
         position: absolute;
         right: 0;
-        bottom: 0;
+        top: -1em;
         opacity: 0.7;
-        z-index: 1; }
+        z-index: 1;
+        width: 1em;
+        height: 1em;
+        margin-right: 0;
+        margin-top: calc(1.2em - 1px); }
       .posts-vertical-m1 .small-block .text .title:after {
         content: '';
         position: absolute;
         right: 0;
+        top: -1em;
         width: 1em;
         height: 1em;
-        margin-top: 0.2em;
-        background: #262626; }
+        margin-top: 1.2em;
+        background: #262626;
+        margin-right: 0; }
 
 .footers-modele1 {
   background-color: #262626;
@@ -353,3 +362,288 @@ h6, .h6 {
     font-weight: 300;
     font-size: 0.9em;
     margin-right: 5px; }
+
+.imagetextrightleft-modelm1 > .container {
+  max-width: 100% !important; }
+  .imagetextrightleft-modelm1 > .container .row.body > div:first-child {
+    background: #3c5265; }
+    .imagetextrightleft-modelm1 > .container .row.body > div:last-child {
+      background: #030405;
+      background: #ac32e4;
+      background: -webkit-linear-gradient(top, #ac32e4, #293845);
+      background: linear-gradient(to bottom, #ac32e4, #293845); }
+  .imagetextrightleft-modelm1 .text-body {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    color: #fff !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.2em; }
+  @media only screen and (min-width: 992px) {
+    .imagetextrightleft-modelm1 .text-body {
+      margin-right: 90px;
+      margin-top: 120px;
+      margin-bottom: 120px; } }
+  @media only screen and (min-width: 1201px) {
+    .imagetextrightleft-modelm1 .text-body {
+      margin-right: 120px; } }
+  @media only screen and (min-width: 1451px) {
+    .imagetextrightleft-modelm1 .text-body {
+      margin-right: 150px; } }
+  .imagetextrightleft-modelm1 .text-body .title {
+    font-weight: 900;
+    line-height: 100%;
+    margin-bottom: 30px; }
+    @media only screen and (min-width: 992px) {
+    .imagetextrightleft-modelm1 .text-body .title {
+      font-size: 2.5em; } }
+    @media only screen and (min-width: 1201px) {
+    .imagetextrightleft-modelm1 .text-body .title {
+      font-size: 3em; } }
+    @media only screen and (min-width: 1451px) {
+    .imagetextrightleft-modelm1 .text-body .title {
+      font-size: 4em; } }
+  .imagetextrightleft-modelm1 .text-body .text {
+    text-align: justify; }
+  .imagetextrightleft-modelm1 .text-body.left {
+    margin-left: 0;
+    margin-right: auto; }
+  .imagetextrightleft-modelm1 .text-body.image {
+    margin: 0;
+    max-width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    height: 100%; }
+  @media only screen and (min-width: 992px) {
+      .imagetextrightleft-modelm1 .text-body.image img {
+        width: calc(100% + 150px - 60px);
+        max-width: calc(100% + 150px - 60px);
+        transform: translateX(-90px); } }
+    @media only screen and (min-width: 1201px) {
+    .imagetextrightleft-modelm1 .text-body.image img {
+      width: calc(100% + 150px - 30px);
+      max-width: calc(100% + 150px - 30px);
+      transform: translateX(-120px); } }
+    @media only screen and (min-width: 1451px) {
+    .imagetextrightleft-modelm1 .text-body.image img {
+      width: calc(100% + 150px);
+      max-width: calc(100% + 150px);
+      transform: translateX(-150px); } }
+
+.cardsmodel2 {
+  font-size: 1.2em;
+  background: #fff; }
+  .cardsmodel2 .sectionspace {
+    margin-top: 60px;
+    margin-bottom: 60px; }
+  @media only screen and (min-width: 992px) {
+    .cardsmodel2 .sectionspace {
+      margin-top: 90px;
+      margin-bottom: 90px; } }
+  .cardsmodel2 .header {
+    text-align: center; }
+  .cardsmodel2 .header .title {
+    font-weight: 900;
+    line-height: 100%;
+    margin-bottom: 30px;
+    color: #3c5265; }
+    @media only screen and (min-width: 992px) {
+    .cardsmodel2 .header .title {
+      font-size: 2.5em; } }
+    @media only screen and (min-width: 1201px) {
+    .cardsmodel2 .header .title {
+      font-size: 3em; } }
+    @media only screen and (min-width: 1451px) {
+    .cardsmodel2 .header .title {
+      font-size: 4em; } }
+  .cardsmodel2 .header .desc {
+    margin-bottom: 60px; }
+  .cardsmodel2 .card {
+    border: none;
+    color: #5a5a5a;
+    flex-direction: row;
+    margin-bottom: 42px;
+    background: #fff;
+    cursor: pointer; }
+  @media only screen and (min-width: 992px) {
+    .cardsmodel2 .card {
+      overflow: hidden;
+      display: block;
+      position: relative;
+      line-height: 1.5em;
+      max-height: 7.965em;
+      text-align: left;
+      margin-right: -0.5em;
+      padding-right: 0.5em; }
+      .cardsmodel2 .card:before {
+        content: '...';
+        position: absolute;
+        right: 0;
+        top: -1em;
+        opacity: 1;
+        z-index: 1;
+        width: 1em;
+        height: 1em;
+        margin-right: 32px;
+        margin-top: calc(7.965em - 1px); }
+      .cardsmodel2 .card:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -1em;
+        width: 1em;
+        height: 1em;
+        margin-top: 7.965em;
+        background: white;
+        margin-right: 32px; } }
+  .cardsmodel2 .card .card-text {
+    padding-bottom: 0px;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out; }
+  .cardsmodel2 .card:hover {
+    overflow: visible;
+    z-index: 1; }
+    .cardsmodel2 .card:hover .card-text {
+      background: inherit; }
+      @media only screen and (min-width: 992px) {
+    .cardsmodel2 .card:hover .card-text {
+      padding-bottom: 20px; } }
+    .cardsmodel2 .card:hover::before, .cardsmodel2 .card:hover::after {
+      display: none; }
+    .cardsmodel2 .card:hover .card-header i {
+      color: #f5723d; }
+  .cardsmodel2 .card-header {
+    font-size: 1em;
+    background: #3c5265;
+    border: none;
+    padding: 0.5em;
+    border-radius: calc(0.25rem - 1px) 0 0 calc(0.25rem - 1px); }
+  .cardsmodel2 .card-header i {
+    font-size: 2em;
+    width: 2em;
+    color: #dadada;
+    text-align: center;
+    max-width: 100%; }
+    @media only screen and (min-width: 992px) {
+    .cardsmodel2 .card-header i {
+      font-size: 3em; } }
+  .cardsmodel2 .card-body {
+    padding-top: 0;
+    padding-bottom: 0;
+    background: inherit; }
+  .cardsmodel2 .card-body .card-title {
+    color: #3c5265;
+    font-weight: 600; }
+
+.cardsstepmodel1 {
+  font-size: 1.2em;
+  background: #eee; }
+  .cardsstepmodel1 .sectionspace {
+    padding-top: 60px;
+    padding-bottom: 60px; }
+  @media only screen and (min-width: 992px) {
+    .cardsstepmodel1 .sectionspace {
+      padding-top: 90px;
+      padding-bottom: 90px; } }
+  .cardsstepmodel1 .header {
+    text-align: center; }
+  .cardsstepmodel1 .header .title {
+    font-weight: 900;
+    line-height: 100%;
+    margin-bottom: 30px;
+    color: #3c5265; }
+    @media only screen and (min-width: 992px) {
+    .cardsstepmodel1 .header .title {
+      font-size: 2.5em; } }
+    @media only screen and (min-width: 1201px) {
+    .cardsstepmodel1 .header .title {
+      font-size: 3em; } }
+    @media only screen and (min-width: 1451px) {
+    .cardsstepmodel1 .header .title {
+      font-size: 4em; } }
+    @media only screen and (min-width: 992px) {
+    .cardsstepmodel1 .header .title {
+      margin-bottom: 60px; } }
+  .cardsstepmodel1 .header .desc {
+    margin-bottom: 60px; }
+  .cardsstepmodel1 .card {
+    border: none;
+    color: #5a5a5a;
+    margin-bottom: 42px;
+    background: #fff; }
+  @media only screen and (min-width: 992px) {
+    .cardsstepmodel1 .card {
+      height: 100%;
+      margin-bottom: 0; } }
+  .cardsstepmodel1 .card .circle {
+    padding: 0;
+    border-radius: 50%;
+    width: 1.84em;
+    height: 1.84em;
+    line-height: 100%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-color: #5a5a5a !important;
+    border-width: 3px !important;
+    z-index: 2;
+    background: #fff; }
+  .cardsstepmodel1 .card .svg-icon {
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: calc(0.5em - 9px); }
+    .cardsstepmodel1 .card .svg-icon > path {
+      stroke: #000;
+      fill: #000; }
+  .cardsstepmodel1 .card-header {
+    font-size: 3em;
+    background: transparent;
+    border: none;
+    padding: 0.5em;
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+    position: relative; }
+  .cardsstepmodel1 .card-header::before {
+    content: '';
+    position: absolute;
+    top: auto;
+    bottom: auto;
+    width: 0.8em;
+    left: 0.5em;
+    height: 3px;
+    background: #5a5a5a; }
+  .cardsstepmodel1 .card-header::after {
+    content: '';
+    position: absolute;
+    top: auto;
+    bottom: auto;
+    width: 0.8em;
+    right: 0.5em;
+    height: 3px;
+    background: #5a5a5a; }
+  .cardsstepmodel1 .card-header.first {
+    color: #f5723d; }
+  .cardsstepmodel1 .card-header.first .circle {
+    border-color: #f5723d !important; }
+  .cardsstepmodel1 .card-header.first .svg-icon > path {
+    stroke: #f5723d;
+    fill: #f5723d; }
+  .cardsstepmodel1 .card-header.first::after {
+    background: #f5723d; }
+  .cardsstepmodel1 .card-header.first::before {
+    display: none; }
+  .cardsstepmodel1 .card-header.last .svg-icon {
+    display: none; }
+  .cardsstepmodel1 .card-header.last::after {
+    display: none; }
+  .cardsstepmodel1 .card-body {
+    padding-top: 0;
+    background: inherit; }
+  .cardsstepmodel1 .card-body .card-title {
+    color: #3c5265;
+    font-weight: 600; }

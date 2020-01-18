@@ -26,7 +26,7 @@ if [[  $updatetheme ]] && [[ $updatetheme == "1" ]] ; then
 	#echo $file;
 	#echo 'Dossier : ' $parent
 	#on interdit l'acces à certains répertoire //
-	if [[ -f "${file}" ]] && [[ $parent != *"bootstrap-3"* ]] && [[ $parent != *"bootstrap-4"* ]] && [[ $parent != *"bootstrap-material-design"* ]] && [[ filenaParent != *"traitementHtml"* ]] && 
+	if [[ -f "${file}" ]] && [[ $parent != *"bootstrap-3"* ]] && [[ $parent != *".git"* ]] && [[ $parent != *"bootstrap-4"* ]] && [[ $parent != *"bootstrap-material-design"* ]] && [[ filenaParent != *"traitementHtml"* ]] && 
 	[[ $parent != *"css"* ]] && [[ $parent != *"font"* ]] && [[ $parent != *"scss"* ]] && [[ $parent != *"scssphp-master"* ]]; then
 		echo -e "Fichier : " $parent"/"$nomFichier;
 		####################################################

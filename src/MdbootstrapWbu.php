@@ -10,19 +10,18 @@ use Drupal\views\Views;
 use Drupal\Core\Template\Attribute;
 use Stephane888\HtmlBootstrap\LoaderDrupal;
 use Drupal\Component\Utility\SortArray;
+use Stephane888\HtmlBootstrap\ThemeUtility;
 
 class MdbootstrapWbu {
 
   public static function wbupreprocess_page(&$variables)
   {
     // dump($variables);
-    $route_name = \Drupal::routeMatch()->getRouteName();
-    dump($route_name);
     $LoaderDrupal = new LoaderDrupal();
     /**
      * get top headers
      */
-    if (theme_get_setting('theme_builder_topheader_status', 'theme_builder') && $LoaderDrupal->filterByRouteName()) {
+    if (theme_get_setting('theme_builder_topheader_status', 'theme_builder')) {
       MdbootstrapWbu::getTopHeaders($LoaderDrupal, $variables);
     }
     /**
@@ -34,7 +33,7 @@ class MdbootstrapWbu {
     /**
      * get sliders
      */
-    if (theme_get_setting('theme_builder_slide_status', 'theme_builder')) {
+    if (theme_get_setting('theme_builder_slide_status', 'theme_builder') && $LoaderDrupal->filterByRouteName(theme_get_setting('theme_builder_slide_routes', 'theme_builder'))) {
       MdbootstrapWbu::getSliders($LoaderDrupal, $variables);
     }
     /**
@@ -45,23 +44,30 @@ class MdbootstrapWbu {
     }
 
     /**
+     * get PriceLists
+     */
+    if (theme_get_setting('theme_builder_pricelists_status', 'theme_builder')) {
+      MdbootstrapWbu::getPriceLists($LoaderDrupal, $variables);
+    }
+
+    /**
      * Get CallActions
      */
-    if (theme_get_setting('theme_builder_callactions_status', 'theme_builder')) {
+    if (theme_get_setting('theme_builder_callactions_status', 'theme_builder') && $LoaderDrupal->filterByRouteName(theme_get_setting('theme_builder_callactions_routes', 'theme_builder'))) {
       MdbootstrapWbu::getCallActions($LoaderDrupal, $variables);
     }
 
     /**
      * Get carouselcards
      */
-    if (theme_get_setting('theme_builder_carouselcards_status', 'theme_builder')) {
+    if (theme_get_setting('theme_builder_carouselcards_status', 'theme_builder') && $LoaderDrupal->filterByRouteName(theme_get_setting('theme_builder_carouselcards_routes', 'theme_builder'))) {
       MdbootstrapWbu::getCarouselCards($LoaderDrupal, $variables);
     }
 
     /**
      * Get Comments
      */
-    if (theme_get_setting('theme_builder_comments_status', 'theme_builder')) {
+    if (theme_get_setting('theme_builder_comments_status', 'theme_builder') && $LoaderDrupal->filterByRouteName(theme_get_setting('theme_builder_comments_routes', 'theme_builder'))) {
       MdbootstrapWbu::getComments($LoaderDrupal, $variables);
     }
 
@@ -194,8 +200,7 @@ class MdbootstrapWbu {
    */
   public static function getThemeInfos()
   {
-    $themes = new Theme();
-    return $themes;
+    return new ThemeUtility();
   }
 
   /**
@@ -203,6 +208,8 @@ class MdbootstrapWbu {
    */
   public static function defineSetting(&$form, $form_state)
   {
+    $themeName = 'theme_builder';
+    $DefineSetting = new \Stephane888\HtmlBootstrap\DefineSetting($themeName);
     if (isset($_GET['build']) && $_GET['build'] == 'scss') {
       _load_scss();
     }
@@ -212,14 +219,21 @@ class MdbootstrapWbu {
 
     // verification des paramettres
     include DRUPAL_ROOT . '/themes/theme_builder/src/configTheme.php';
-
+    /**
+     * active tree to get name like array.
+     */
+    // $form['#tree'] = TRUE;
+    /**
+     * remove cache
+     */
+    $form_state->setCached(FALSE);
     // add custom submit
     $form['#submit'][] = 'theme_builder_settings_form_submit';
     $form['#attached']['library'][] = 'theme_builder/vue_js';
     $form['#attached']['library'][] = 'theme_builder/styleadmin';
     $form['#attached']['drupalSettings']['theme_builder']['layouts'] = $themes->config_layout_theme();
     // add templates vue js;
-    $form['#suffix'] = new FormattableMarkup(file_get_contents(DRUPAL_ROOT . '/' . drupal_get_path('theme', 'theme_builder') . '/plugins/components_vuejs/templates/forms.html.twig'), []);
+    $form['#suffix'] = new FormattableMarkup(file_get_contents(DRUPAL_ROOT . '/' . drupal_get_path('theme', $themeName) . '/plugins/components_vuejs/templates/forms.html.twig'), []);
     // dump($form['#suffix']);
     /*
      * $form['vuejs_preview'] = array(
@@ -263,125 +277,24 @@ class MdbootstrapWbu {
       ]
     );
 
-    /**
-     * Group Header
-     */
-    $group = 'theme_builder_header';
-    $form[$group] = array(
-      '#type' => 'details',
-      '#title' => t('Header'),
-      '#group' => $vertical_tabs_group
-    );
-    // sous group Header
-    $sous_group = 'menu';
-    $form[$group][$sous_group] = array(
-      '#type' => 'details',
-      '#title' => 'Menu',
-      '#open' => false,
-      '#attributes' => [
-        'class' => [
-          'wbu-ui-state-default'
-        ]
-      ]
-    );
-    $name = 'position';
-    $form[$group][$sous_group][$group . $name] = [];
-    $value = theme_get_setting($group . $name, 'theme_builder');
-    $options = [
-      'fixed-top is-fixed' => 'Fixed top',
-      'not-fixed' => ' relatif (non fisser ) '
-    ];
-    $form[$group][$sous_group][$group . $name] = array(
-      '#type' => 'radios',
-      '#title' => t('Position du menu'),
-      '#options' => $options,
-      '#default_value' => (! empty($value)) ? $value : 'fixed-top is-fixed'
-    );
-    //
-    $name = 'container';
-    $form[$group][$sous_group][$group . $name] = [];
-    $value = theme_get_setting($group . $name, 'theme_builder');
-    $options = [
-      'container' => 'container',
-      'container-fuild' => 'container-fuild'
-    ];
-    $form[$group][$sous_group][$group . $name] = array(
-      '#type' => 'radios',
-      '#title' => t('Container type'),
-      '#options' => $options,
-      '#default_value' => (! empty($value)) ? $value : 'container-fuild'
-    );
-    //
-    $name = 'texte';
-    $form[$group][$sous_group][$group . $name] = [];
-    $value = theme_get_setting($group . $name, 'theme_builder');
-    $form[$group][$sous_group][$group . $name] = $themes->add_textfield($name, $group, $form[$group][$sous_group][$group . $name], 'texte', 'Déposer une annonce gratuite');
+    // ############################### BEGIN SECTIONS.
 
     /**
-     * Group bg_img_front
+     * Group imagetextrightleft
      */
-    $group = 'theme_builder_bg_img_front';
-    $form[$group] = array(
-      '#type' => 'details',
-      '#title' => t('Bloc image in front'),
-      '#group' => $vertical_tabs_group
-    );
-    // sous group Header
-    $sous_group = 'content';
-    $form[$group][$sous_group] = array(
-      '#type' => 'details',
-      '#title' => 'Content',
-      '#open' => false,
-      '#attributes' => [
-        'class' => [
-          'wbu-ui-state-default'
-        ]
-      ]
-    );
-    //
-    /*
-     * $name='texte';
-     * $form[$group][$sous_group][$group . $name] = [];
-     * $default ='<h3>Equipped With The Tools You Need </h3>';
-     * $default .='<p>Choose from different theme options to build a finished site real estate web site. </p>';
-     * $form[$group][$sous_group][$group . $name] = $themes->add_textarea_editeur( $name, $group, $form[$group][$sous_group][$group . $name], 'texte', $default);
-     * //
-     * $name='image_bg';
-     * $form[$group][$sous_group][$group . $name] = [];
-     * $form[$group][$sous_group][$group . $name] = $themes->add_image($name, $group, $form[$group][$sous_group][$group . $name], ' Image d\'arriere plan ');
+    if (theme_get_setting($themeName . '_imagetextrightleft_status', $themeName)) {
+      $DefineSetting->group = 'imagetextrightleft';
+      $DefineSetting->form_imagetextrightleft($form, $vertical_tabs_group, $form_state);
+    }
+
+    /**
+     * Group cards
      */
-    //
-    $name = 'nombre_slide';
-    $form[$group][$sous_group][$group . $name] = [];
-    $form[$group][$sous_group][$group . $name] = $themes->add_textfield($name, $group, $form[$group][$sous_group][$group . $name], 'Nombre de slide', 3);
-    $value = theme_get_setting($group . $name, 'theme_builder');
-    if ($value < 1) {
-      $value = 3;
+    if (theme_get_setting($themeName . '_cards_status', $themeName)) {
+      $DefineSetting->group = 'cards';
+      $DefineSetting->form_cards($form, $vertical_tabs_group, $form_state);
     }
-    for ($i = 1; $i <= $value; $i ++) {
-      // sous sous group Header
-      $sous_group_2 = 'content_' . $i;
-      $form[$group][$sous_group][$sous_group_2] = array(
-        '#type' => 'details',
-        '#title' => 'Slider : ' . $i,
-        '#open' => false,
-        '#attributes' => [
-          'class' => [
-            'wbu-ui-state-default'
-          ]
-        ]
-      );
-      //
-      $name = $i . 'texte';
-      $form[$group][$sous_group][$sous_group_2][$group . $name] = [];
-      $default = '<h3 class="titre">Equipped With The Tools You Need </h3>';
-      $default .= '<div class="sous-titre">Choose from different theme options to build a finished site real estate web site. </div>';
-      $form[$group][$sous_group][$sous_group_2][$group . $name] = $themes->add_textarea_editeur($name, $group, $form[$group][$sous_group][$sous_group_2][$group . $name], 'texte', $default);
-      //
-      $name = $i . 'image_bg';
-      $form[$group][$sous_group][$sous_group_2][$group . $name] = [];
-      $form[$group][$sous_group][$sous_group_2][$group . $name] = $themes->add_image($name, $group, $form[$group][$sous_group][$sous_group_2][$group . $name], ' Image d\'arriere plan ');
-    }
+
     /**
      * Customiser row view
      */
@@ -549,10 +462,31 @@ class MdbootstrapWbu {
 
   protected static function getImageTextRightLeft($LoaderDrupal, &$variables)
   {
-    $options = [
-      'type' => 'default'
-    ];
-    $variables['page']['before_content']['defaultContent2'] = $LoaderDrupal->getImageTextRightLeft($options);
+    $group = 'imagetextrightleft';
+    $theme_name = 'theme_builder';
+    $i = 0;
+    $values = theme_get_setting($theme_name . '_' . $group, 'theme_builder');
+    /**
+     * Gestion de l'affichage.
+     */
+    if (isset($values['displays']))
+      foreach ($values['displays'] as $display) {
+        $i ++;
+        /**
+         * Filtre de l'affichage
+         */
+        $parameter = (empty($display['nid'])) ? '' : $display['nid'];
+        if ($LoaderDrupal->filterByRouteName($display['route'], $parameter)) {
+
+          $options = [
+            'type' => $display['model']
+          ];
+          $LoaderDrupal->loadImageTextRightLeftDatas($options, $group, $theme_name, $display);
+          $variables['page'][$display['region']][$theme_name . '_' . $group][$i] = $LoaderDrupal->getImageTextRightLeft($options);
+          $variables['page'][$display['region']][$theme_name . '_' . $group][$i]["#weight"] = $display['weight'];
+          $variables['page'][$display['region']][$theme_name . '_' . $group]["#weight"] = $display['weight'];
+        }
+      }
   }
 
   /**
@@ -584,18 +518,30 @@ class MdbootstrapWbu {
    */
   protected static function getCards($LoaderDrupal, &$variables)
   {
-    $group = 'theme_builder_cards';
+    $group = 'cards';
     $theme_name = 'theme_builder';
-    $options = [
-      'type' => 'IconeModelFlat'
-    ];
-    $options['nombre_item'] = theme_get_setting($group . '_nombre_item', 'theme_builder');
+    $i = 0;
+    $values = theme_get_setting($theme_name . '_' . $group, 'theme_builder');
     /**
-     * Get Datas and put it in options.
+     * Gestion de l'affichage.
      */
-    $LoaderDrupal->loadCardsDatas($options, $group, $theme_name);
-    $variables['page']['before_content'][$theme_name . '_Cards'] = $LoaderDrupal->getCards($options);
-    $variables['page']['before_content'][$theme_name . '_Cards']["#weight"] = - 98;
+    if (isset($values['displays']))
+      foreach ($values['displays'] as $display) {
+        $i ++;
+        /**
+         * Filtre de l'affichage
+         */
+        $parameter = (empty($display['nid'])) ? '' : $display['nid'];
+        if ($LoaderDrupal->filterByRouteName($display['route'], $parameter)) {
+          $options = [
+            'type' => $display['model']
+          ];
+          $LoaderDrupal->loadCardsDatas($options, $group, $theme_name, $display);
+          $variables['page'][$display['region']][$theme_name . '_' . $group][$i] = $LoaderDrupal->getCards($options);
+          $variables['page'][$display['region']][$theme_name . '_' . $group][$i]["#weight"] = $display['weight'];
+          $variables['page'][$display['region']][$theme_name . '_' . $group]["#weight"] = $display['weight'];
+        }
+      }
   }
 
   /**

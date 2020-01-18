@@ -785,15 +785,18 @@ function theme_builder_preprocess_block(&$variables)
         }
       }
     }
-  }
-  /**
-   * override block menu
+  } /**
+   * override block system_branding_block
    */
-  if ($variables["base_plugin_id"] == 'system_menu_block') {
-    if ($variables['derivative_plugin_id'] == 'mon-compte') {}
-    // dump($variables);
+  elseif (! empty($variables["elements"]['#base_plugin_id']) && $variables["elements"]['#base_plugin_id'] == "system_branding_block") {
+    $variables["elements"]['#id'] = 'theme_builder_branding';
   }
   // dump($variables);
+}
+
+function theme_builder_preprocess_block__system_branding_bloc(&$variables)
+{
+  dump('block system-branding-bloc ');
 }
 
 /**
@@ -879,7 +882,7 @@ function theme_builder_preprocess_page_title(&$variables)
     $variables["title"]["#printed"] = false;
   }
   /**
-   * add name for author if user visite author page
+   * Add name for author if user visite author page
    */
   // dump($route_name = \Drupal::routeMatch()->getParameters());
   if (\Drupal::routeMatch()->getParameter('view_id') == 'index_theme_builder' && \Drupal::routeMatch()->getParameter('user')) {
@@ -1025,6 +1028,7 @@ function theme_builder_settings_form_submit(&$form, \Drupal\Core\Form\FormStateI
   // $account = \Drupal::currentUser();
   $values = $form_state->getValues();
   // dump($values);
+  // die('end form');
   foreach ($values as $key => $value) {
     if (strstr($key, 'theme_builder')) {
       // check if field is image
@@ -1055,6 +1059,11 @@ function _saveimage($image)
     }
   }
 }
+
+/**
+ * Action Ajax for theme
+ */
+require_once ('inc/ajaxtheme.inc');
 
 
 
